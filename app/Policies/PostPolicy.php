@@ -31,7 +31,8 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasVerifiedEmail();
+        // return $user->hasVerifiedEmail();
+        return true;
 
     }
     /**

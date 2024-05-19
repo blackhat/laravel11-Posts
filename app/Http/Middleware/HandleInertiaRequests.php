@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,7 +36,14 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             // 'greeting' => "Hello World",
-            'message' => $request->session()->get('message'),
+            // 'message' => $request->session()->get('message'),
+            // 'message' => collect(Arr::only($request->session()->all(),['success', 'warning', 'error', 'info']))
+            'message' => collect(Arr::only($request->session()->all(), ['success', 'warning', 'error', 'info']))->mapWithKeys(function ($body, $type) {
+                return [
+                    'type' => $type,
+                    'body' => $body
+                ];
+            })
         ];
     }
 }

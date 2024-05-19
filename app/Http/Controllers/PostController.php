@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
+use App\Http\Requests\StorePostRequest;
 
 
 class PostController extends Controller
@@ -40,13 +40,18 @@ class PostController extends Controller
     {
 
         // sleep(3);
+        // abort(403);
         auth()->user()->posts()->create($request->validated());
 
         // return redirect()->route('posts.index');
-        return redirect()->route('posts.index')->with('message',[
-            'type' => 'success',
-            'body' => 'Post created successfully'
-        ]);
+
+        // return redirect()->route('posts.index')->with('message',[
+        //     'type' => 'success',
+        //     'body' => 'Post created successfully'
+        // ]);
+
+        return redirect()->route('posts.index')
+            ->with('success', 'Post created successfully');
 
 
     }
